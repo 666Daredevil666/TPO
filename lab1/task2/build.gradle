@@ -1,0 +1,19 @@
+plugins {
+  id 'lab1.java-application-conventions'
+  id 'me.champeau.jmh' version '0.7.3'
+}
+
+application {
+  mainClass = 'lab1.task2.App'
+}
+
+jmh {
+  warmupIterations = 1
+  iterations = 3
+  fork = 1
+  warmup = '1s'
+  timeOnIteration = '1s'
+  timeUnit = 'ms'
+  resultFormat = 'CSV'
+  resultsFile = file("$buildDir/reports/jmh/results.csv")
+}
