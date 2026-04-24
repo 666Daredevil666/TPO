@@ -1,0 +1,54 @@
+plugins {
+  id 'java'
+  id 'application'
+  id 'jacoco'
+  id 'me.champeau.jmh' version '0.7.3'
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
+}
+
+application {
+  mainClass = 'lab2.App'
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(17)
+  }
+}
+
+test {
+  useJUnitPlatform()
+  finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+  dependsOn test
+}
+
+jmh {
+  warmupIterations = 2
+  iterations = 3
+  fork = 1
+  warmup = '1s'
+  timeOnIteration = '1s'
+  timeUnit = 'ns'
+  resultFormat = 'CSV'
+  resultsFile = file("$buildDir/reports/jmh/latency.csv")
+}
+
+tasks.register('generateLatencyPlots', JavaExec) {
+  group = 'verification'
+  description = 'Runs JMH and generates median, p90, and p99 latency SVG plots.'
+  dependsOn tasks.named('jmh')
+  classpath = sourceSets.main.runtimeClasspath
+  mainClass = 'lab2.benchmark.LatencyReportGenerator'
+  args file("$buildDir/reports/jmh/latency.csv").absolutePath,
+      file("$buildDir/reports/jmh/plots").absolutePath
+}

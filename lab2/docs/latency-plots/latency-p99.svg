@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="92" y="30" font-family="Arial" font-size="22" font-weight="700">P99 latency by precision</text>
+<line x1="92" y1="52" x2="92" y2="456" stroke="#111827" stroke-width="1"/>
+<line x1="92" y1="456" x2="924" y2="456" stroke="#111827" stroke-width="1"/>
+<line x1="92" y1="456.000" x2="924" y2="456.000" stroke="#e5e7eb"/>
+<text x="80" y="460.000" text-anchor="end" font-family="Arial" font-size="12" fill="#374151">0.000</text>
+<line x1="92" y1="375.200" x2="924" y2="375.200" stroke="#e5e7eb"/>
+<text x="80" y="379.200" text-anchor="end" font-family="Arial" font-size="12" fill="#374151">100.000</text>
+<line x1="92" y1="294.400" x2="924" y2="294.400" stroke="#e5e7eb"/>
+<text x="80" y="298.400" text-anchor="end" font-family="Arial" font-size="12" fill="#374151">200.000</text>
+<line x1="92" y1="213.600" x2="924" y2="213.600" stroke="#e5e7eb"/>
+<text x="80" y="217.600" text-anchor="end" font-family="Arial" font-size="12" fill="#374151">300.000</text>
+<line x1="92" y1="132.800" x2="924" y2="132.800" stroke="#e5e7eb"/>
+<text x="80" y="136.800" text-anchor="end" font-family="Arial" font-size="12" fill="#374151">400.000</text>
+<line x1="92" y1="52.000" x2="924" y2="52.000" stroke="#e5e7eb"/>
+<text x="80" y="56.000" text-anchor="end" font-family="Arial" font-size="12" fill="#374151">500.000</text>
+<text x="92.000" y="484" text-anchor="middle" font-family="Arial" font-size="13" fill="#374151">1e-4</text>
+<text x="369.333" y="484" text-anchor="middle" font-family="Arial" font-size="13" fill="#374151">1e-8</text>
+<text x="646.667" y="484" text-anchor="middle" font-family="Arial" font-size="13" fill="#374151">1e-12</text>
+<text x="924.000" y="484" text-anchor="middle" font-family="Arial" font-size="13" fill="#374151">1e-14</text>
+<text x="508" y="516" text-anchor="middle" font-family="Arial" font-size="14" fill="#111827">epsilon</text>
+<text transform="translate(24 254) rotate(-90)" text-anchor="middle" font-family="Arial" font-size="14" fill="#111827">ns/op</text>
+<polyline fill="none" stroke="#2563eb" stroke-width="2.5" points="92.000,388.936 369.333,355.000 646.667,321.064 924.000,220.872 "/>
+<circle cx="92.000" cy="388.936" r="4" fill="#2563eb"/>
+<circle cx="369.333" cy="355.000" r="4" fill="#2563eb"/>
+<circle cx="646.667" cy="321.064" r="4" fill="#2563eb"/>
+<circle cx="924.000" cy="220.872" r="4" fill="#2563eb"/>
+<line x1="772" y1="72" x2="800" y2="72" stroke="#2563eb" stroke-width="3"/>
+<text x="810" y="77" font-family="Arial" font-size="13" fill="#111827">maxTerms=500</text>
+<polyline fill="none" stroke="#dc2626" stroke-width="2.5" points="92.000,388.128 369.333,355.000 646.667,321.064 924.000,254.000 "/>
+<circle cx="92.000" cy="388.128" r="4" fill="#dc2626"/>
+<circle cx="369.333" cy="355.000" r="4" fill="#dc2626"/>
+<circle cx="646.667" cy="321.064" r="4" fill="#dc2626"/>
+<circle cx="924.000" cy="254.000" r="4" fill="#dc2626"/>
+<line x1="772" y1="96" x2="800" y2="96" stroke="#dc2626" stroke-width="3"/>
+<text x="810" y="101" font-family="Arial" font-size="13" fill="#111827">maxTerms=5000</text>
+<polyline fill="none" stroke="#16a34a" stroke-width="2.5" points="92.000,388.936 369.333,355.000 646.667,321.064 924.000,287.128 "/>
+<circle cx="92.000" cy="388.936" r="4" fill="#16a34a"/>
+<circle cx="369.333" cy="355.000" r="4" fill="#16a34a"/>
+<circle cx="646.667" cy="321.064" r="4" fill="#16a34a"/>
+<circle cx="924.000" cy="287.128" r="4" fill="#16a34a"/>
+<line x1="772" y1="120" x2="800" y2="120" stroke="#16a34a" stroke-width="3"/>
+<text x="810" y="125" font-family="Arial" font-size="13" fill="#111827">maxTerms=20000</text>
+</svg>
