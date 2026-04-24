@@ -17,20 +17,25 @@ import lab2.impl.RealLog10Module;
 import lab2.impl.RealSecModule;
 import lab2.impl.RealSinModule;
 import lab2.impl.RealSystemFunction;
-import lab2.impl.RealTgModule;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("Анализ классов эквивалентности и особых точек")
 class EquivalencePartitionTest {
 
   @Test
+  @DisplayName("ln(x): допустимый класс x > 0")
   void ln_domain_positive_valid() {
+    // Положительные x входят в область определения натурального логарифма.
     ComputationContext ctx = new ComputationContext(1e-11, 50000);
     LnModule ln = new RealLnModule(ctx);
     assertEquals(Math.log(3.3), ln.ln(3.3), 1e-7);
   }
 
   @Test
+  @DisplayName("ln(x): недопустимые классы x = 0 и x < 0")
   void ln_domain_non_positive_invalid() {
+    // Ноль и отрицательные значения должны отбрасываться до вычисления ряда.
     ComputationContext ctx = new ComputationContext(1e-11, 50000);
     LnModule ln = new RealLnModule(ctx);
     assertThrows(IllegalArgumentException.class, () -> ln.ln(0.0));
@@ -38,14 +43,19 @@ class EquivalencePartitionTest {
   }
 
   @Test
+  @DisplayName("log10(x) наследует область определения от ln(x)")
   void log10_domain_follows_ln() {
+    // log10 построен через ln, поэтому отрицательный аргумент также недопустим.
     ComputationContext ctx = new ComputationContext(1e-11, 50000);
     Log10Module log10 = new RealLog10Module(new RealLnModule(ctx));
     assertThrows(IllegalArgumentException.class, () -> log10.log10(-0.1));
   }
 
   @Test
+  @DisplayName("Итоговая система отклоняет ожидаемые сингулярные точки")
   void system_domain_has_expected_singular_points() {
+    // x = 0 и x = -pi ломают sin в cot/csc, x = -pi/2 ломает cos в sec,
+    // x = 1 ломает логарифмическую ветку из-за ln(x) в знаменателе.
     ComputationContext ctx = new ComputationContext(1e-12, 50000);
     ModuleStacks.Stack stack = ModuleStacks.Stack.allReal(ctx);
     assertThrows(IllegalArgumentException.class, () -> stack.system().system(0.0));
@@ -55,7 +65,9 @@ class EquivalencePartitionTest {
   }
 
   @Test
+  @DisplayName("Итоговая система возвращает конечное значение в обычной точке")
   void system_valid_interval_smooth() {
+    // x = 0.25 лежит в допустимой области логарифмической ветки.
     ComputationContext ctx = new ComputationContext(1e-12, 50000);
     SystemFunctionModule sys = ModuleStacks.Stack.allReal(ctx).system();
     double v = sys.system(0.25);
@@ -63,7 +75,10 @@ class EquivalencePartitionTest {
   }
 
   @Test
+  @DisplayName("Граница положительной области: малое x > 0")
   void boundary_small_positive_x() {
+    // Проверяем положительное значение рядом с границей x = 0, где логарифм
+    // быстро меняется и нужна более мягкая погрешность сравнения.
     ComputationContext ctx = new ComputationContext(1e-10, 50000);
     RealSinModule sin = new RealSinModule(ctx);
     RealCosModule cos = new RealCosModule(sin);

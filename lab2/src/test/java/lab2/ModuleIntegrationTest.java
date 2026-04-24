@@ -17,12 +17,17 @@ import lab2.impl.RealTgModule;
 import lab2.stub.StubLog10Module;
 import lab2.stub.Table1D;
 import lab2.variant.Variant320202;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("Интеграционные тесты модулей системы функций")
 class ModuleIntegrationTest {
 
   @Test
+  @DisplayName("Полностью реальная сборка системы совпадает с Math-эталоном")
   void full_real_stack_matches_reference() {
+    // Собираем все реальные модули через ModuleStacks и проверяем итоговую
+    // логарифмическую ветку системы в обычной допустимой точке x > 0.
     ComputationContext ctx = new ComputationContext(1e-12, 50000);
     ModuleStacks.Stack stack = ModuleStacks.Stack.allReal(ctx);
     double x = 0.41;
@@ -32,7 +37,10 @@ class ModuleIntegrationTest {
   }
 
   @Test
+  @DisplayName("cos(x) интегрирован через базовый модуль sin(x)")
   void cos_depends_on_sin_module() {
+    // По заданию небазовые тригонометрические функции строятся через базовые:
+    // здесь проверяем, что cos корректно получается через sin(x + pi/2).
     ComputationContext ctx = new ComputationContext(1e-12, 20000);
     RealSinModule sin = new RealSinModule(ctx);
     RealCosModule cos = new RealCosModule(sin);
@@ -41,7 +49,10 @@ class ModuleIntegrationTest {
   }
 
   @Test
+  @DisplayName("tg(x) бросает исключение в точке, где cos(x) равен нулю")
   void tg_throws_at_cos_zero() {
+    // Тангенс определяется как sin/cos, поэтому около pi/2 знаменатель
+    // становится нулевым и модуль обязан сообщить о сингулярности.
     ComputationContext ctx = new ComputationContext(1e-12, 20000);
     RealSinModule sin = new RealSinModule(ctx);
     RealCosModule cos = new RealCosModule(sin);
@@ -50,13 +61,18 @@ class ModuleIntegrationTest {
   }
 
   @Test
+  @DisplayName("Арифметика двух ветвей варианта 320202 считается правильно")
   void variant_branches_have_expected_arithmetic() {
+    // Изолированно проверяем формулы ветвей без погрешностей рядов и модулей.
     assertEquals(15.0, Variant320202.branchXLe0(2.0, 3.0, 6.0, 2.0), 0.0);
     assertEquals(4.0, Variant320202.branchXGt0(2.0, 1.0), 0.0);
   }
 
   @Test
+  @DisplayName("Смешанная сборка: реальные тригонометрические модули и заглушка log10")
   void hybrid_real_trig_stub_log10_matches_reference() {
+    // Этот тест демонстрирует пошаговую интеграцию: log10 временно заменён
+    // табличной заглушкой, остальные зависимости уже реальные.
     ComputationContext ctx = new ComputationContext(1e-12, 50000);
     RealSinModule sin = new RealSinModule(ctx);
     RealCosModule cos = new RealCosModule(sin);
@@ -78,7 +94,10 @@ class ModuleIntegrationTest {
   }
 
   @Test
+  @DisplayName("Табличная заглушка log10 согласована с реальной реализацией")
   void stub_log10_table_aligned_with_real_reference() {
+    // Значения таблицы для StubLog10Module берутся из реального log10, поэтому
+    // в узловой точке x = 0.5 смешанная система должна совпасть с эталоном.
     double[] xs = {0.2, 0.5, 0.8};
     ComputationContext ctx = new ComputationContext(1e-12, 50000);
     RealLnModule ln = new RealLnModule(ctx);

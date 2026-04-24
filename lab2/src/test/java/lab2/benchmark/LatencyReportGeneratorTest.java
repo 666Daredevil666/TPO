@@ -7,16 +7,21 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+@DisplayName("Генератор отчётных файлов по JMH latency benchmark")
 class LatencyReportGeneratorTest {
 
   @TempDir
   Path tempDir;
 
   @Test
+  @DisplayName("Генератор извлекает p50/p90/p99 и создаёт summary + SVG")
   void generator_extracts_percentiles_and_writes_report_files() throws Exception {
+    // Формируем минимальный JMH CSV вручную, чтобы проверить парсинг чисел,
+    // группировку по epsilon/maxTerms и создание файлов для отчёта.
     Path input = tempDir.resolve("latency.csv");
     Files.write(
         input,
@@ -45,7 +50,9 @@ class LatencyReportGeneratorTest {
   }
 
   @Test
+  @DisplayName("Неполные группы percentiles игнорируются")
   void read_rows_ignores_incomplete_percentile_groups() throws Exception {
+    // Для отчёта нужна полная тройка median/p90/p99; одиночная строка не попадёт в summary.
     Path input = tempDir.resolve("latency.csv");
     Files.write(
         input,
